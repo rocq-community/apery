@@ -41,9 +41,9 @@ remains the sole trusted code base.
   - Assia Mahboubi ([**@amahboubi**](https://github.com/amahboubi))
   - Kazuhiko Sakaguchi ([**@pi8027**](https://github.com/pi8027))
 - License: [CeCILL-C](LICENSE)
-- Compatible Coq versions: 8.16 or later
+- Compatible Coq versions: 8.18 or later
 - Additional dependencies:
-  - [MathComp ssreflect 2.1 or later](https://math-comp.github.io)
+  - [MathComp ssreflect 2.3 or later](https://math-comp.github.io)
   - [MathComp algebra](https://math-comp.github.io)
   - [MathComp field](https://math-comp.github.io)
   - [CoqEAL 2.0.4 or later](https://github.com/coq-community/coqeal)

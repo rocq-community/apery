@@ -18,8 +18,7 @@ Definition multinomial (l : seq nat) : nat :=
 Arguments multinomial l : simpl never.
 
 (* Notation under evaluation ... *)
-Notation "''C' [ l ]" := (multinomial l)
-  (at level 8, format "''C' [ l ]") : nat_scope.
+Notation "''C' [ l ]" := (multinomial l) : nat_scope.
 
 (* For instance I would like to avoid double brackets, like in: *)
 Check 'C[[::]].
