@@ -138,7 +138,7 @@ pose_big_enough m.
   have diff_pos1 (k l : nat) : (k < l)%N -> (1 < k)%N ->
                                0 < b_over_a_seq l - b_over_a_seq k.
     move=> ltkn lt1k; rewrite Db_over_a_casoratian //.
-    rewrite (big_cat_nat _ _ _ (leqnSn _) ltkn) big_nat1 /=.
+    rewrite (@big_cat_nat _ _ _ _ _ _ _ _ (leqnSn _) ltkn) big_nat1 /=.  (* FIXME: replace with (big_cat_nat (leqnSn _) ltkn) when requiring MC >= 2.4.0 *)
     have aux (i : nat) : 0 < 6%:Q / (i%:Q + 1) ^ 3 / (a (int.shift 1 i) * a i).
       apply: divr_gt0; first by apply: lt_0_ba_casoratian.
       apply:mulr_gt0; exact: lt_0_a.
@@ -175,7 +175,7 @@ exists large => n hlarge.
   rewrite -[_ / _ / _]mulrA -[_ / _]invfM -expr2 -lerBlDr.
   rewrite -/(b_over_a_seq n).
   have leSnSi : (n.+1 <= i.+1)%N by [].
-  rewrite z3seqE mulr_sumr (big_cat_nat _ _ _ _ leSnSi) //= mulrDl ler_wpDl //.
+  rewrite z3seqE mulr_sumr (@big_cat_nat _ _ _ _ _ _ _ _ _ leSnSi) //= mulrDl ler_wpDl //.  (* FIXME: replace with (big_cat_nat _ leSnSi) when requiring MC >= 2.4.0 *)
     rewrite divr_ge0 ?exprn_ge0 ?le_0_a ?sumr_ge0 // => k _.
     by rewrite divr_ge0 ?exprn_ge0 ?ler0n.
   rewrite big_add1 /= Db_over_a_casoratian; [ | raise_big_enough | exact: leni].

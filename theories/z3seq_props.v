@@ -23,7 +23,7 @@ Qed.
 Fact Dz3seqE (i j : nat) : (j <= i)%N ->
                    z3seq i - z3seq j = \sum_(j.+1 <= k < i.+1) (k%:Q ^ 3)^-1.
 Proof.
-rewrite -ltnS => leji; rewrite !z3seqE (big_cat_nat _ _ _ _ leji) //=.
+rewrite -ltnS => leji; rewrite !z3seqE (@big_cat_nat _ _ _ _ _ _ _ _ _ leji) //=.  (* FIXME: replace with (big_cat_nat _ leji) when requiring MC >= 2.4.0 *)
 by rewrite addrAC addrN add0r.
 Qed.
 
