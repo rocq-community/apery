@@ -90,7 +90,7 @@ move => prime_p leq_nm; rewrite logn_fact //; symmetry.
 (* to specify both the (dummy) predicate and the summand... *)
 pose G (i : nat) := n %/ p ^ i.+1.
 rewrite -[LHS](big_mkord (fun _ => true) G); rewrite {}/G.
-rewrite (big_cat_nat _ _ _ (leq0n n) leq_nm) /= addnC.
+rewrite (@big_cat_nat _ _ _ _ _ _ _ _ (leq0n n) leq_nm) /= addnC.  (* FIXME: replace with (big_cat_nat (leq0n n) leq_nm) when requiring MC >= 2.4.0 *)
 rewrite big_nat_cond /= big1; first by rewrite add0n big_add1.
 move=> i; rewrite andbT => /andP [leni ltim]; apply: divn_small.
 apply: leq_trans (ltn_expl _ _); first exact: leq_trans leni _.
@@ -105,7 +105,7 @@ move => prime_p leq_npj.
 case: (ltnP j n) => [le_jn|lt_nj]; last by rewrite (@fact_logp_sum_widen p j).
 rewrite logn_fact //. have hl : 1 <= j.+1 by [].
 have hr : j.+1 <= n.+1 by exact: ltnW.
-rewrite (big_cat_nat _ _ _ hl hr) /= addnC big_nat_cond /= big1.
+rewrite (@big_cat_nat _ _ _ _ _ _ _ _ hl hr) /= addnC big_nat_cond /= big1.  (* FIXME: replace with (big_cat_nat hl hr) when requiring MC >= 2.4.0 *)
   by rewrite add0n big_add1 /= big_mkord.
 move=> i; rewrite andbT => /andP [leni ltim]; apply: divn_small.
 apply: leq_trans leq_npj _; rewrite leq_exp2l //; exact: prime_gt1.
