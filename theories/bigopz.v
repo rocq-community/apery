@@ -8,24 +8,24 @@ Unset Strict Implicit.
 Unset Printing Implicit Defensive.
 
 Reserved Notation "\big [ op / idx ]_ ( m <= i < n :> 'int' | P ) F"
-  (at level 36, F at level 36, op, idx at level 10, m, i, n at level 50,
+  (F at level 36,
            format "'[' \big [ op / idx ]_ ( m  <=  i  <   n  :>  'int'  |   P )  F ']'").
 Reserved Notation "\big [ op / idx ]_ ( m <= i < n :> 'int' ) F"
-  (at level 36, F at level 36, op, idx at level 10, i, m, n at level 50,
+  (F at level 36,
            format "'[' \big [ op / idx ]_ ( m  <=  i  <   n  :>  'int'  ) '/  '  F ']'").
 
 Reserved Notation "\sum_ ( m <= i < n :> 'int' | P ) F"
-  (at level 41, F at level 41, i, m, n at level 50,
+  (F at level 41,
            format "'[' \sum_ ( m  <=  i  <  n  :>  'int'  |  P ) '/  '  F ']'").
 Reserved Notation "\sum_ ( m <= i < n :> 'int' ) F"
-  (at level 41, F at level 41, i, m, n at level 50,
+  (F at level 41,
            format "'[' \sum_ ( m  <=  i  <  n  :>  'int' ) '/  '  F ']'").
 
 Reserved Notation "\prod_ ( m <= i < n :> 'int' | P ) F"
-  (at level 36, F at level 36, i, m, n at level 50,
+  (F at level 36,
            format "'[' \prod_ ( m  <=  i  <  n  :>  'int'  |  P ) '/  '  F ']'").
 Reserved Notation "\prod_ ( m <= i < n :> 'int' ) F"
-  (at level 36, F at level 36, i, m, n at level 50,
+  (F at level 36,
            format "'[' \prod_ ( m  <=  i  <  n  :>  'int' ) '/  '  F ']'").
 
 Import Order.TTheory GRing.Theory Num.Theory.
