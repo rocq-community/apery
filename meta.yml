@@ -25,7 +25,7 @@ publications:
   pub_title: A Computer-Algebra-Based Formal Proof of the Irrationality of ζ(3)
   pub_doi: 10.1007/978-3-319-08970-6_11
 - pub_url: https://drops.dagstuhl.de/opus/volltexte/2022/16738/pdf/LIPIcs-ITP-2022-29.pdf
-  pub_title: Reflexive Tactics for Algebra, Revisited
+  pub_title: Reflexive tactics for algebra, revisited
   pub_doi: 10.4230/LIPIcs.ITP.2022.29
 
 authors:
@@ -52,24 +52,30 @@ license:
 
 supported_coq_versions:
   text: 8.20 or later
-  opam: '{(>= "8.20" & < "9.1~") | (= "dev")}'
+  opam: '{>= "8.20"}'
 
 tested_coq_opam_versions:
 - version: '2.3.0-coq-8.20'
   repo: 'mathcomp/mathcomp'
-- version: '2.3.0-coq-dev'
+- version: '2.4.0-coq-8.20'
+  repo: 'mathcomp/mathcomp'
+- version: '2.4.0-rocq-prover-9.0'
+  repo: 'mathcomp/mathcomp'
+- version: '2.4.0-rocq-prover-dev'
   repo: 'mathcomp/mathcomp'
 - version: 'coq-8.20'
   repo: 'mathcomp/mathcomp-dev'
-- version: 'coq-dev'
+- version: 'rocq-prover-9.0'
+  repo: 'mathcomp/mathcomp-dev'
+- version: 'rocq-prover-dev'
   repo: 'mathcomp/mathcomp-dev'
 
 dependencies:
 - opam:
     name: coq-mathcomp-ssreflect
-    version: '{(>= "2.3" & < "2.4~") | (= "dev")}'
+    version: '{>= "2.3"}'
   description: |-
-    [MathComp ssreflect 2.1 or later](https://math-comp.github.io)
+    [MathComp ssreflect](https://math-comp.github.io) 2.3 or later
 - opam:
     name: coq-mathcomp-algebra
   description: |-
@@ -80,29 +86,26 @@ dependencies:
     [MathComp field](https://math-comp.github.io)
 - opam:
     name: coq-coqeal
-    version: '{>= "2.0.4"}'
+    version: '{>= "2.1.0"}'
   description: |-
-    [CoqEAL 2.0.4 or later](https://github.com/coq-community/coqeal)
+    [CoqEAL](https://github.com/coq-community/coqeal) 2.1.0 or later
 - opam:
     name: coq-mathcomp-real-closed
-    version: '{>= "2.0.0"}'
   description: |-
-    [MathComp real closed fields 2.0.0 or later](https://github.com/math-comp/real-closed)
+    [MathComp real closed fields](https://github.com/math-comp/real-closed)
 - opam:
     name: coq-mathcomp-bigenough
     version: '{>= "1.0.1"}'
   description: |-
-    [MathComp bigenough 1.0.1 or later](https://github.com/math-comp/bigenough)
+    [MathComp bigenough](https://github.com/math-comp/bigenough) 1.0.1 or later
 - opam:
     name: coq-mathcomp-zify
-    version: '{>= "1.5.0"}'
   description: |-
-    [Mczify](https://github.com/math-comp/mczify) 1.5.0 or later
+    [Mczify](https://github.com/math-comp/mczify)
 - opam:
     name: coq-mathcomp-algebra-tactics
-    version: '{>= "1.2.2"}'
   description: |-
-    [Algebra Tactics](https://github.com/math-comp/algebra-tactics) 1.2.2 or later
+    [Algebra Tactics](https://github.com/math-comp/algebra-tactics)
 
 namespace: mathcomp.apery
 

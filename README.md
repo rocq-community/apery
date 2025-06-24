@@ -37,25 +37,25 @@ remains the sole trusted code base.
   - Frédéric Chyzak (initial)
   - Assia Mahboubi (initial)
   - Thomas Sibut-Pinote (initial)
-- Coq-community maintainer(s):
+- Rocq-community maintainer(s):
   - Assia Mahboubi ([**@amahboubi**](https://github.com/amahboubi))
   - Kazuhiko Sakaguchi ([**@pi8027**](https://github.com/pi8027))
 - License: [CeCILL-C](LICENSE)
-- Compatible Coq versions: 8.20 or later
+- Compatible Rocq/Coq versions: 8.20 or later
 - Additional dependencies:
-  - [MathComp ssreflect 2.3 or later](https://math-comp.github.io)
+  - [MathComp ssreflect](https://math-comp.github.io) 2.3 or later
   - [MathComp algebra](https://math-comp.github.io)
   - [MathComp field](https://math-comp.github.io)
-  - [CoqEAL 2.0.4 or later](https://github.com/coq-community/coqeal)
-  - [MathComp real closed fields 2.0.0 or later](https://github.com/math-comp/real-closed)
-  - [MathComp bigenough 1.0.1 or later](https://github.com/math-comp/bigenough)
-  - [Mczify](https://github.com/math-comp/mczify) 1.5.0 or later
-  - [Algebra Tactics](https://github.com/math-comp/algebra-tactics) 1.2.2 or later
-- Coq namespace: `mathcomp.apery`
+  - [CoqEAL](https://github.com/coq-community/coqeal) 2.1.0 or later
+  - [MathComp real closed fields](https://github.com/math-comp/real-closed)
+  - [MathComp bigenough](https://github.com/math-comp/bigenough) 1.0.1 or later
+  - [Mczify](https://github.com/math-comp/mczify)
+  - [Algebra Tactics](https://github.com/math-comp/algebra-tactics)
+- Rocq/Coq namespace: `mathcomp.apery`
 - Related publication(s):
   - [A Formal Proof of the Irrationality of ζ(3)](https://arxiv.org/abs/1912.06611) 
   - [A Computer-Algebra-Based Formal Proof of the Irrationality of ζ(3)](https://hal.inria.fr/hal-00984057) doi:[10.1007/978-3-319-08970-6_11](https://doi.org/10.1007/978-3-319-08970-6_11)
-  - [Reflexive Tactics for Algebra, Revisited](https://drops.dagstuhl.de/opus/volltexte/2022/16738/pdf/LIPIcs-ITP-2022-29.pdf) doi:[10.4230/LIPIcs.ITP.2022.29](https://doi.org/10.4230/LIPIcs.ITP.2022.29)
+  - [Reflexive tactics for algebra, revisited](https://drops.dagstuhl.de/opus/volltexte/2022/16738/pdf/LIPIcs-ITP-2022-29.pdf) doi:[10.4230/LIPIcs.ITP.2022.29](https://doi.org/10.4230/LIPIcs.ITP.2022.29)
 
 ## Building and installation instructions
 
