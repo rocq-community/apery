@@ -57,7 +57,7 @@ Proof.
 rewrite /= ler_pdivrMr; last first.
   by rewrite ltr0q ltr0n expn_gt0 divn_gt0 ?Hain.
 rewrite[X in _ <= X]mulrC mulrA ler_pdivlMr.
-- rewrite mulrC; apply/ler_wpM2l/remark_7_2.
+- rewrite [leRHS]mulrC; apply/ler_wpM2l/remark_7_2.
   by apply: exp_quo_ge0; rewrite // divr_ge0 ?ler0n.
 - by apply: exp_quo_gt0; rewrite // divr_gt0 // ltr0n ?subn_gt0.
 Qed.
@@ -615,7 +615,8 @@ have le_0_alpham2 k : 0 <= (alpha k)%:Z - 2%:Z.
   rewrite /alpha; apply: (@le_trans _ _ ((2 ^ 2 ^ 0)%:Z - 2%:Z)) => //.
   by apply: lerB=> //; rewrite lez_nat leq_exp2l // leq_exp2l.
 have maj_t n : t n.+1 <= t n ^ 2 * l n.
-  rewrite /t 2!expfzMl !exprz_exp expfzMl -2!mulrA -[_ * _ * l n]mulrA.
+  rewrite /t 2!expfzMl !exprz_exp expfzMl.
+  rewrite -[leLHS]mulrA -[X in X * l n]mulrA -[_ * _ * l n]mulrA.
   apply: ler_pM; first exact: exprz_ge0. (* missing posreal... *)
   - apply: mulr_ge0; apply: exprz_ge0 => //; exact: ltW.
   - rewrite ler_weXn2l //; lia.
