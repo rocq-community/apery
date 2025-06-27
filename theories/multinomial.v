@@ -221,7 +221,7 @@ Proof.
     by rewrite (nth_map ord0 0) /tl ?size_tuple ?(nth_mktuple aux ord0 i).
   rewrite /lz size_map; set P := BIG_P.
   have /(bigD1 _) -> /= : P tl.
-    rewrite /P /n /s big_tuple big_tnth /=; apply/eqP/eq_bigr => i _.
+    rewrite /P /n /s big_tuple [eqbRHS]big_tnth /=; apply/eqP/eq_bigr => i _.
     by rewrite tnth_mktuple /aux /= (tnth_nth 0) in_tupleE.
   suff {P} -> : (('C[l])%:R * p%:R =
      ('C[tmap_val tl])%:R * monomial [seq i%:R | i <- l] (tmap_val tl) :> int)%R.

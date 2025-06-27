@@ -168,7 +168,7 @@ Proof.
 pose_big_enough large.
 exists large => n hlarge.
   apply: (@lecr_trans _ (6%:Q%:CR * z3 * (1 / a n)%:CR))%CR; last first.
-    rewrite cst_crealM.
+    rewrite (@cst_crealM _ Kdelta).
     by apply/lecr_mulf2r/divr_ge0/le_0_a; first exact: le_ubound.
   rewrite {1}z3_eq_b_over_a; apply: (@le_crealP _ n) => i leni /=.
   rewrite mul1r lerBlDr mulrC -ler_pdivlMr ?lt_0_a // mulrDl.
