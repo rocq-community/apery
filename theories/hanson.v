@@ -1,3 +1,4 @@
+From mathcomp Require all_algebra. (* Remove this line when requiring Rocq > 9.1 *)
 Require Import ZArith.
 From mathcomp Require Import all_ssreflect ssralg ssrnum ssrint rat all_field archimedean.
 Require Import extra_mathcomp tactics binomialz arithmetics posnum.

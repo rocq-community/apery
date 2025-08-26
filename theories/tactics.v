@@ -1,3 +1,4 @@
+From mathcomp Require all_algebra. (* Remove this line when requiring Rocq > 9.1 *)
 From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat choice seq.
 From mathcomp Require Import fintype finfun bigop order ssralg ssrnum ssrint.
 From mathcomp Require Export zify ring.
