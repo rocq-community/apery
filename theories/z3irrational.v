@@ -275,8 +275,8 @@ pose_big_enough M.
   have -> : lhs = C * (K2 ^ 3 / 33%:Q) ^ n.
     (* what an ugly script... rat_field is bad with _ ^ n *)
     rewrite {}/lhs /C [in RHS]expfzMl exprzAC -[in RHS]expfV.
-    set x := _ ^ n; set y := _ ^ n; field.
-    by rewrite expfz_neq0 ?intr_eq0 // lt0r_neq0 ?lt_0_Ka.
+    set x := _ ^ n; set y := _ ^ n.
+    by field; rewrite 1?expfz_neq0 ?intr_eq0 // lt0r_neq0 ?lt_0_Ka.
   rewrite -ltr_pdivlMl -[X in _ < X]mulrC; last by rewrite mulrC; exact: Cpos.
   apply: hN; raise_big_enough.
 by close.
