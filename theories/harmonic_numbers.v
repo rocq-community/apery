@@ -45,5 +45,5 @@ elim: m => [|m ->]; first by field => //.
 (* The ring tactic is not able to reason under (_ ^ m) where m is a variable:
    we have to expand (_ ^_.+1) and identify p2 and p3 by hand... *)
 rewrite !exprSz.
-by field; rewrite /= !expfz_eq0; ring_lia.
+by field; rewrite /= ?expfz_eq0; ring_lia.
 Qed.

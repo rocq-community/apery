@@ -39,8 +39,7 @@ have hnm : (m <= n)%N by lia.
 rewrite (subzn hkn) (subzn hmk) (subzn hnm) !binzE; [| lia..].
 have -> : (n + k - (k - m) = n + m)%N by rewrite subnBA // addnAC addnK.
 have -> : (n - m - (n - k) = k - m)%N by rewrite subnAC subnBA // addKn.
-rewrite !addnK; field.
-rewrite !pnatr_eq0 -!lt0n !fact_gt0; lia.
+rewrite !addnK; field; rewrite ?pnatr_eq0 -?lt0n ?fact_gt0; lia.
 Qed.
 
 (* First significant step in the proof: for any n, the rational number *)
@@ -79,13 +78,13 @@ pose hardest_term := (l n)%:Q ^ 3 / (m%:Q ^ 3 * (binomialz k m)%:Q ^ 2).
 set other_term := (X in _ * _ * _ * X).
 set goal_term := (X in X \is a Num.int).
 have {goal_term} -> : goal_term = (-1) ^ (m + 1) * other_term * hardest_term.
-  rewrite /goal_term /hardest_term; field.
-  rewrite !intr_eq0 lt0r_neq0 ?binz_gt0; lia.
+  rewrite /goal_term /hardest_term.
+  field; rewrite !intr_eq0 lt0r_neq0 ?binz_gt0; lia.
 apply/rpredM; first by rewrite expN1r rpred_zify.
 have {hardest_term other_term} -> :
     hardest_term = ((l n)%:Q / m%:Q) * ((l n)%:Q / (m * binomialz k m)%:Q) ^ 2.
-  rewrite expfzMl {}/hardest_term; field.
-  by rewrite !intr_eq0 lt0r_neq0 ?binz_gt0; lia.
+  rewrite expfzMl {}/hardest_term.
+  by field; rewrite !intr_eq0 lt0r_neq0 ?binz_gt0; lia.
 apply/rpredM/rpredX.
   apply: iter_lcmn_mul_rat; rewrite normr_denq denqVz; lia.
 case: k m le0k le1m lemk lekn => [] k [] m // *.
