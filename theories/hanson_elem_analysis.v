@@ -157,7 +157,6 @@ by rewrite [LHS]mulrDl divfK // mulrBr mulr1 addrA subrK exprSr.
 Qed.
 
 (* A bound on (1 + 1 / (n+1)) ^ (n+2) *)
-From mathcomp Require Import interval.
 Lemma one_plus_invn_expn (n : nat) : (1 + n%:Q^-1) ^+ n.+1 <= 8%:Q.
 Proof.
 case: n => // n.
