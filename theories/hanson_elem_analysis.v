@@ -1,5 +1,6 @@
 From mathcomp Require Import all_ssreflect ssralg ssrnum ssrint rat all_field.
-Require Import extra_mathcomp posnum hanson_elem_arith.
+From mathcomp Require Import interval_inference.
+Require Import extra_mathcomp hanson_elem_arith.
 
 Set Implicit Arguments.
 Unset Strict Implicit.
@@ -156,12 +157,13 @@ by rewrite [LHS]mulrDl divfK // mulrBr mulr1 addrA subrK exprSr.
 Qed.
 
 (* A bound on (1 + 1 / (n+1)) ^ (n+2) *)
+From mathcomp Require Import interval.
 Lemma one_plus_invn_expn (n : nat) : (1 + n%:Q^-1) ^+ n.+1 <= 8%:Q.
 Proof.
 case: n => // n.
 have step: (1 + n.+1%:Q^-1) ^+ n.+1 <= \sum_(i < n.+2) i`!%:Q^-1.
   rewrite exprDn; apply: ler_sum => i _; rewrite expr1n mul1r -mulr_natr exprVn.
-  rewrite ler_pdivrMl ?ler_pdivlMr ?ltr0n ?expn_gt0 ?fact_gt0 //.
+  rewrite ler_pdivrMl ?ler_pdivlMr ?ltr0n ?expn_gt0 ?fact_gt0 -?pmulrn //.  (* TODO: refine the canonical instance for Posz in interval_inference.v  *)
   by rewrite -natrM bin_ffact -natrX ler_nat ffact_le_expn.
 have {step}: (1 + n.+1%:Q^-1) ^+ n.+2 <= 2%:Q * \sum_(i < n.+2) i`!%:Q^-1.
   rewrite exprS; apply: ler_pM => //.

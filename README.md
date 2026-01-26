@@ -43,7 +43,7 @@ remains the sole trusted code base.
 - License: [CeCILL-C](LICENSE)
 - Compatible Rocq/Coq versions: 8.20 or later
 - Additional dependencies:
-  - [MathComp ssreflect](https://math-comp.github.io) 2.3 or later
+  - [MathComp ssreflect](https://math-comp.github.io) 2.4 or later
   - [MathComp algebra](https://math-comp.github.io)
   - [MathComp field](https://math-comp.github.io)
   - [CoqEAL](https://github.com/coq-community/coqeal) 2.1.0 or later
@@ -63,7 +63,7 @@ The easiest way to install the latest released version of Apery
 is via [OPAM](https://opam.ocaml.org/doc/Install.html):
 
 ```shell
-opam repo add coq-released https://coq.inria.fr/opam/released
+opam repo add rocq-released https://rocq-prover.org/opam/released
 opam install coq-mathcomp-apery
 ```
 
