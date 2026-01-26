@@ -1,7 +1,7 @@
 From mathcomp Require all_algebra. (* Remove this line when requiring Rocq > 9.1 *)
 Require Import ZArith.
-From mathcomp Require Import all_ssreflect ssralg ssrnum ssrint rat.
-From mathcomp Require Import all_field archimedean interval_inference.
+From mathcomp Require Import all_ssreflect ssralg ssrnum ssrint.
+From mathcomp Require Import archimedean rat interval_inference all_field.
 Require Import extra_mathcomp tactics binomialz arithmetics.
 Require Import rat_of_Z hanson_elem_arith hanson_elem_analysis.
 

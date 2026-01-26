@@ -1,5 +1,5 @@
-From mathcomp Require Import all_ssreflect ssralg ssrnum ssrint rat all_field.
-From mathcomp Require Import interval_inference.
+From mathcomp Require Import all_ssreflect ssralg ssrnum ssrint rat.
+From mathcomp Require Import interval_inference all_field.
 Require Import extra_mathcomp hanson_elem_arith.
 
 Set Implicit Arguments.
