@@ -1,7 +1,8 @@
 From mathcomp Require all_algebra. (* Remove this line when requiring Rocq > 9.1 *)
 Require Import ZArith.
-From mathcomp Require Import all_ssreflect ssralg ssrnum ssrint rat all_field archimedean.
-Require Import extra_mathcomp tactics binomialz arithmetics posnum.
+From mathcomp Require Import all_ssreflect ssralg ssrnum ssrint rat.
+From mathcomp Require Import all_field archimedean interval_inference.
+Require Import extra_mathcomp tactics binomialz arithmetics.
 Require Import rat_of_Z hanson_elem_arith hanson_elem_analysis.
 
 Set Implicit Arguments.
@@ -92,12 +93,12 @@ Lemma l7 n i (Hain : (a i <= n)%N) :
   exp_quo (10%N%:Q * n%:Q / (a i)%:Q) (a i - 1) (a i).
 Proof.
 have posai_rat : 0 < (a i)%:Q by rewrite ltr0n.
-pose posai := PosNumDef posai_rat.
-have -> : (a i)%:Q = num_of_pos posai by [].
+pose posai := PosNum posai_rat.
+have -> : (a i)%:Q = posai%:num by [].
 have lt0n : (0 < n)%N by exact: leq_trans Hain.
 have lt0n_rat : 0 < n%:Q by rewrite ltr0n.
-pose posn := PosNumDef lt0n_rat.
-have -> : n%:Q = num_of_pos posn by [].
+pose posn := PosNum lt0n_rat.
+have -> : n%:Q = posn%:num by [].
 apply: le_lt_trans (remark_7_3 Hain) _.
 set lhs := (X in X < _); set rhs := (X in _ < X).
 suff : lhs ^+ a i < rhs ^+ a i.
@@ -300,13 +301,6 @@ Qed.
 
 Lemma w_ge1 : 1 <= w. Proof. exact/ltW/w_gt1. Qed.
 
-Section PosNum.
-Context {R : numFieldType}.
-Lemma posrat (r : {posnum rat}) : 0 < ratr (num_of_pos r) :> R.
-Proof. by rewrite ltr0q. Qed.
-
-End PosNum.
-
 (* Computer-algebra aided proof. *)
 Lemma w_upper_bounded k : w_seq k <= w%:C.
 Proof.
@@ -318,10 +312,10 @@ have -> : w_seq 4 = a' 0 * a' 1 * a' 2 * a' 3.
   by rewrite /w_seq !big_ord_recr /= big_ord0 mul1r.
 have a'0_ubP : a' 0 <= a'0_ub%:C.
   have ge0a'0 : 0 <= a'0_ub%:C by rewrite ler0q divr_ge0.
-  by rewrite root_le_x // a0 -rmorphXn ler_rat expr_div_n ler_pdivlMr; ring_lia.
+  by rewrite root_le_x // ?ler0q // a0 -rmorphXn ler_rat expr_div_n ler_pdivlMr; ring_lia.  (* TODO: add a canonical instance for ratr in interval_inference.v *)
 have a'1_ubP : a' 1 <= a'1_ub%:C.
   have ge0a'1 : 0 <= a'1_ub%:C by rewrite ler0q divr_ge0.
-  by rewrite root_le_x // a1 -rmorphXn ler_rat expr_div_n ler_pdivlMr; ring_lia.
+  by rewrite root_le_x // ?ler0q // a1 -rmorphXn ler_rat expr_div_n ler_pdivlMr; ring_lia.  (* TODO: add a canonical instance for ratr in interval_inference.v *)
 have a'2_ubP : a' 2 <= a'2_ub%:C.
   have ge0a'2 : 0 <= a'2_ub%:C by rewrite ler0q divr_ge0.
   have ge0a2 : 0 <= (a 2)%:Q%:C by rewrite ler0q.
