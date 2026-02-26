@@ -5,6 +5,7 @@ From mathcomp Require Import archimedean rat interval_inference all_field.
 Require Import extra_mathcomp tactics binomialz arithmetics.
 Require Import rat_of_Z hanson_elem_arith hanson_elem_analysis.
 
+Set SsrOldRewriteGoalsOrder.  (* change Set to Unset when porting the file, then remove the line when requiring MathComp >= 2.6 *)
 Set Implicit Arguments.
 Unset Strict Implicit.
 Unset Printing Implicit Defensive.

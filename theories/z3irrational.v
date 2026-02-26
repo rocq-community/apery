@@ -5,6 +5,7 @@ Require Import tactics shift bigopz arithmetics seq_defs.
 Require Import c_props s_props z3seq_props a_props b_props b_over_a_props.
 Require hanson.
 
+Set SsrOldRewriteGoalsOrder.  (* change Set to Unset when porting the file, then remove the line when requiring MathComp >= 2.6 *)
 Set Implicit Arguments.
 Unset Strict Implicit.
 Unset Printing Implicit Defensive.

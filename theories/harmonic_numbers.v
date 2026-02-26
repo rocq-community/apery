@@ -2,6 +2,8 @@
 From mathcomp Require Import all_ssreflect ssralg ssrnum ssrint rat.
 Require Import tactics shift bigopz.
 
+Set SsrOldRewriteGoalsOrder.  (* change Set to Unset when porting the file, then remove the line when requiring MathComp >= 2.6 *)
+
 Import Order.TTheory GRing.Theory Num.Theory.
 
 Local Open Scope ring_scope.

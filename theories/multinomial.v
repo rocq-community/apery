@@ -1,6 +1,8 @@
 From mathcomp Require Import all_ssreflect ssralg ssrnum ssrint rat.
 Require Import extra_mathcomp.
 
+Set SsrOldRewriteGoalsOrder.  (* change Set to Unset when porting the file, then remove the line when requiring MathComp >= 2.6 *)
+
 Import Order.TTheory GRing.Theory Num.Theory.
 
 Local Notation "s `_ i" := (nth 0 s i) : nat_scope.
