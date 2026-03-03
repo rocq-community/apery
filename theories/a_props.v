@@ -11,6 +11,7 @@ Require Import tactics shift binomialz bigopz rat_of_Z rho_computations.
 Require annotated_recs_c.
 Require Import seq_defs c_props initial_conds algo_closures.
 
+Set SsrOldRewriteGoalsOrder.  (* change Set to Unset when porting the file, then remove the line when requiring MathComp >= 2.6 *)
 Set Implicit Arguments.
 Unset Strict Implicit.
 Unset Printing Implicit Defensive.

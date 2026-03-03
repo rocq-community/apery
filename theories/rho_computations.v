@@ -5,6 +5,7 @@ From CoqEAL Require Import hrel param refinements.
 From CoqEAL Require Import pos binnat rational.
 Require Import tactics rat_of_Z.
 
+Set SsrOldRewriteGoalsOrder.  (* change Set to Unset when porting the file, then remove the line when requiring MathComp >= 2.6 *)
 Set Implicit Arguments.
 Unset Strict Implicit.
 Unset Printing Implicit Defensive.

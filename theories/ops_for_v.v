@@ -3,6 +3,8 @@ Load "include/ops_header.v".
 Require annotated_recs_c annotated_recs_s.
 Require Import annotated_recs_v.
 
+Set SsrOldRewriteGoalsOrder.  (* change Set to Unset when porting the file, then remove the line when requiring MathComp >= 2.6 *)
+
 (* Shorter name space for elements in annotated_recs_[c|u|v] *)
 Module c.
 Include annotated_recs_c.

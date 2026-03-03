@@ -2,6 +2,7 @@ From mathcomp Require Import all_ssreflect ssralg ssrnum ssrint intdiv rat.
 From mathcomp Require Import archimedean.
 Require Import tactics binomialz bigopz arithmetics seq_defs a_props.
 
+Set SsrOldRewriteGoalsOrder.  (* change Set to Unset when porting the file, then remove the line when requiring MathComp >= 2.6 *)
 Set Implicit Arguments.
 Unset Strict Implicit.
 Unset Printing Implicit Defensive.

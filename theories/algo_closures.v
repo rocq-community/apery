@@ -6,6 +6,7 @@ Require Import tactics shift binomialz rat_of_Z seq_defs.
 Require annotated_recs_c annotated_recs_z annotated_recs_d.
 Require ops_for_a ops_for_b ops_for_s ops_for_u ops_for_v.
 
+Set SsrOldRewriteGoalsOrder.  (* change Set to Unset when porting the file, then remove the line when requiring MathComp >= 2.6 *)
 Set Implicit Arguments.
 Unset Strict Implicit.
 Unset Printing Implicit Defensive.

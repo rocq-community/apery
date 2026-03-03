@@ -4,6 +4,7 @@ From mathcomp Require Import fintype finfun bigop order ssralg ssrnum ssrint.
 From mathcomp Require Export zify.
 From mathcomp.algebra_tactics Require Export ring.
 
+Set SsrOldRewriteGoalsOrder.  (* change Set to Unset when porting the file, then remove the line when requiring MathComp >= 2.6 *)
 Set Implicit Arguments.
 Unset Strict Implicit.
 Unset Printing Implicit Defensive.
