@@ -19,7 +19,7 @@ Section RationalPower.
 
 Definition exp_quo r p q := q.-root r%:C ^+ p.
 
-Arguments exp_quo r p%nat q%nat : simpl never.
+Arguments exp_quo r p%_nat q%_nat : simpl never.
 
 Lemma exp_quo_0 p q : exp_quo 0 p q = (p == 0%N)%:R.
 Proof. by rewrite /exp_quo /ratr mul0r rootC0 expr0n. Qed.
