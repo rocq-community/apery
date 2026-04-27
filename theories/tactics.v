@@ -1,8 +1,7 @@
 From mathcomp Require all_algebra. (* Remove this line when requiring Rocq > 9.1 *)
 From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat choice seq.
 From mathcomp Require Import fintype finfun bigop order ssralg ssrnum ssrint.
-From mathcomp Require Export zify.
-From mathcomp.algebra_tactics Require Export ring.
+From mathcomp Require Export zify ring.
 
 Set SsrOldRewriteGoalsOrder.  (* change Set to Unset when porting the file, then remove the line when requiring MathComp >= 2.6 *)
 Set Implicit Arguments.
