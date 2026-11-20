@@ -1,12 +1,12 @@
 From mathcomp Require Import all_ssreflect ssralg ssrnum ssrint.
-From mathcomp Require Import bigenough cauchyreals.
+From mathcomp Require Import near cauchyreals.
 
 Set SsrOldRewriteGoalsOrder.  (* change Set to Unset when porting the file, then remove the line when requiring MathComp >= 2.6 *)
 Set Implicit Arguments.
 Unset Strict Implicit.
 Unset Printing Implicit Defensive.
 
-Import Order.TTheory GRing.Theory Num.Theory BigEnough.
+Import Order.TTheory GRing.Theory Num.Theory.
 
 Local Open Scope ring_scope.
 
@@ -16,31 +16,26 @@ Variable F : realFieldType.
 
 Lemma eq_creal_ext (x y : creal F) : x =1 y ->  (x == y)%CR.
 Proof.
-move=> heq; apply/eq_crealP; exists (fun _ => 0%N) => * /=.
+move=> heq; apply/eq_crealP => eps eps_gt0; near=> i.
 by rewrite heq subrr normr0.
-Qed.
+Unshelve. all: by end_near. Qed.
 
 Lemma ler_lecr  (x y : creal F) : (forall i, x i <= y i) ->  (x <= y)%CR.
 Proof.
 move=> heq; apply: (@le_crealP _ 0%N) => j _; exact: heq.
 Qed.
 
-
 Lemma ltcr_add2r (z x y : creal F) : (x < y)%CR -> (x + z < y + z)%CR.
 Proof.
-move=> lt_xy; pose_big_enough i.
-  apply: (@lt_crealP _ (diff lt_xy) i i); rewrite ?diff_gt0 //=.
-  by rewrite addrAC lerD2r diffP.
-by close.
-Qed.
+case=> /= eps eps_gt0 Hxy; exists eps => //.
+by near=> i do rewrite /= addrAC lerD2r; apply: Hxy.
+Unshelve. all: by end_near. Qed.
 
 Lemma ltcr_add2l (z x y : creal F) : (x < y)%CR -> (z + x < z + y)%CR.
 Proof.
-move=> lt_xy; pose_big_enough i.
-  apply: (@lt_crealP _ (diff lt_xy) i i); rewrite ?diff_gt0 //=.
-  rewrite -addrA lerD2l diffP //.
-by close.
-Qed.
+case=> /= eps eps_gt0 Hxy; exists eps => //.
+by near=> i do rewrite /= -addrA lerD2l; apply: Hxy.
+Unshelve. all: by end_near. Qed.
 
 Lemma addr_gtcr0 (x y : creal F) : (0 < x -> 0 < y -> 0 < x + y)%CR.
 move=> lt_0x lt_0y.
@@ -59,16 +54,13 @@ Qed.
 Lemma ltcr_mul2r (z x y : creal F) : 
   (x < y)%CR -> (0 < z)%CR -> (x * z < y * z)%CR.
 Proof.
-move=> ltxy lt0z; pose_big_enough i.
-  apply: (@lt_crealP _ ((diff ltxy) * (diff lt0z)) i i) => //=.
-  - apply: mulr_gt0; exact: diff_gt0.
-  rewrite -lerBDl -mulrBl; apply: ler_pM.
-  - by apply: ltW; apply: diff_gt0.
-  - by apply: ltW; apply: diff_gt0.
-  - by rewrite lerBDl diffP.
-  - by rewrite -[X in X <= _]add0r -[0]/((0%:CR)%CR i) diffP.
-by close.
-Qed.
+move=> [eps eps_gt0 Hxy] [eps' eps'_gt0 Hz].
+exists (eps * eps'); first exact: mulr_gt0.
+near=> i.
+rewrite -lerBDl -mulrBl; apply: ler_pM; try exact: ltW.
+  by rewrite lerBDl; near: i.
+by rewrite -[leLHS]add0r; near: i.
+Unshelve. all: by end_near. Qed.
 
 Lemma mulcrN (x y : creal F) : (x * - y == - (x * y))%CR.
 Proof. by apply: eq_creal_ext=> i /=; rewrite mulrN. Qed.
@@ -112,16 +104,16 @@ by apply: lt_creal_trans aux _; apply: ltcr_mul2r.
 Qed.
 
 Lemma mulr_gtcr0 (x y : creal F) : (0 < x -> 0 < y -> 0 < x * y)%CR.
-move=> lt_0x lt_0y; pose_big_enough i.
-  apply: (@lt_crealP _ ((diff lt_0x) * (diff lt_0y)) i i) => //=.
-  - apply: mulr_gt0; exact: diff_gt0.
-  rewrite add0r; apply: ler_pM.
-  - by apply: ltW; apply: diff_gt0.
-  - by apply: ltW; apply: diff_gt0.
-  - by rewrite -[X in X <= _]add0r -[0]/((0%:CR)%CR i) diffP.
-  - by rewrite -[X in X <= _]add0r -[0]/((0%:CR)%CR i) diffP.
-by close.
-Qed.
+Proof.
+move=> [eps eps_gt0 Hx] [eps' eps'_gt0 Hy].
+exists (eps * eps'); first exact: mulr_gt0.
+near=> i.
+rewrite add0r/=; apply: ler_pM.
+- exact: ltW.
+- exact: ltW.
+- by rewrite -[leLHS]add0r; near: i.
+by rewrite -[leLHS]add0r; near: i.
+Unshelve. all: by end_near. Qed.
 
 Lemma cst_crealM (x y : F) : ((x * y)%:CR == x%:CR * y%:CR)%CR.
 Proof. by apply: eq_creal_ext=> i /=. Qed.
@@ -135,6 +127,7 @@ Proof. by apply: eq_creal_ext=> i /=. Qed.
 Lemma cst_crealN (x : F) : ((- x)%:CR == - x%:CR)%CR.
 Proof. by apply: eq_creal_ext=> i /=. Qed.
 
+(*
 Lemma le_ubound (x : creal F) : (x <= (ubound x)%:CR)%CR.
 Proof.
 apply: (@le_crealP _ 0%N) => j _ /=.
@@ -148,38 +141,30 @@ pose_big_enough i.
   apply: le_trans (uboundP x i); exact: ler_norm.
 by close.
 Qed.
+*)
 
 Lemma ltcr_le_trans (y x z : creal F): (x < y -> y <= z -> x < z)%CR.
 Proof.
-move=> ltxy leyz; pose_big_enough i.
-  have hpos : 0 < diff ltxy / 2%:~R.
-    apply: divr_gt0; rewrite ?ltr0Sn //; exact: diff_gt0.
-  apply: (@lt_crealP _  ((diff ltxy) / 2%:~R) i i) => //=.
-  have -> : x i + diff ltxy / 2%:~R = x i + diff ltxy - diff ltxy / 2%:~R.
-    apply/eqP; rewrite eq_sym subr_eq -addrA -mulrDr.
-    have <- : 1 = 2%:~R^-1 + 2%:~R^-1 :> F by rewrite [LHS](splitf 2) div1r.
-    by rewrite mulr1.
-  rewrite lerBlDr; apply: le_trans (diffP _ _) _ => //; apply: ltW.
-  by apply: le_modP.
-by close.
-Qed.
+move=> [eps eps_gt0 Hxy] /asympt_le Hyz.
+exists (eps / 2); first exact: divr_gt0.
+near=> i.
+rewrite -(lerD2r (eps / 2)) -addrA -mulr2n -mulr_natr divfK ?pnatr_eq0//.
+have/le_trans->//: x i + eps <= y i by near: i.
+by apply/ltW; near: i; apply/Hyz; exact: divr_gt0.
+Unshelve. all: by end_near. Qed.
 
 Lemma lecr_lt_trans (y x z : creal F): (x <= y)%CR -> (y < z)%CR -> (x < z)%CR.
 Proof.
 (* We could just use the opposites but we do not have the lemmas... *)
 (* Hence we copy paste mutatis mutandis the previous proof *)
-move=> lexy ltyz; pose_big_enough i.
-  have hpos : 0 < diff ltyz / 2%:~R.
-    apply: divr_gt0; rewrite ?ltr0Sn //; exact: diff_gt0.
-  apply: (@lt_crealP _  ((diff ltyz) / 2%:~R) i i) => //=.
-  apply: le_trans (@diffP _ _ _ ltyz _ _ _) => //; rewrite -lerBrDr.
-  suff <- : y i + diff ltyz / 2%:~R = y i + diff ltyz - diff ltyz / 2%:~R.
-    by apply: ltW; apply: le_modP.
-  apply/eqP; rewrite eq_sym subr_eq -addrA -mulrDr.
-  have <- : 1 = 2%:~R^-1 + 2%:~R^-1 :> F by rewrite [LHS](splitf 2) div1r.
-  by rewrite mulr1. 
-by close.
-Qed.
+move=> /asympt_le Hxy [eps eps_gt0 Hyz].
+exists (eps / 2); first exact: divr_gt0.
+near=> i.
+have: y i + eps <= z i by near: i.
+apply: le_trans; rewrite -[eps in leRHS](@divfK _ 2) ?pnatr_eq0// mulr_natr.
+rewrite -lerBrDr -addrA addrK.
+by apply/ltW; near: i; apply/Hxy; exact: divr_gt0.
+Unshelve. all: by end_near. Qed.
 
 Lemma lecr_trans (y x z : creal F): (x <= y -> y <= z -> x <= z)%CR.
 Proof.
