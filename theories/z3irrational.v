@@ -1,5 +1,5 @@
 From mathcomp Require Import all_ssreflect ssralg ssrnum ssrint rat archimedean.
-From mathcomp Require Import bigenough cauchyreals.
+From mathcomp Require Import near cauchyreals.
 Require Import extra_mathcomp extra_cauchyreals.
 Require Import tactics shift bigopz arithmetics seq_defs.
 Require Import c_props s_props z3seq_props a_props b_props b_over_a_props.
@@ -10,7 +10,7 @@ Set Implicit Arguments.
 Unset Strict Implicit.
 Unset Printing Implicit Defensive.
 
-Import Order.TTheory GRing.Theory Num.Theory BigEnough.
+Import Order.TTheory GRing.Theory Num.Theory.
 
 Local Open Scope ring_scope.
 
@@ -29,51 +29,64 @@ Local Open Scope ring_scope.
 (* formalize about the asymptotic behaviour of the sequence lcm(1,...,n).     *)
 (******************************************************************************)
 
-
-Ltac raise_big_enough := solve [big_enough_trans].
-
-
 (* We prove that z3seq is a Cauchy sequence. *)
 Lemma creal_z3seq : creal_axiom z3seq.
 Proof.
 rewrite /creal_axiom.
 pose n_inv_seq (n : nat) := n%:Q^-1.
-have [/= modulus_n_inv modulus_n_inv_P] : {asympt e : i / n_inv_seq i < e}.
-  exists_big_modulus M rat => /=.
-    move=> eps i lt_eps0 hMi.
-    rewrite /n_inv_seq -div1r ltr_pdivrMr;
-      last by rewrite ltr0n; raise_big_enough.
-    rewrite -ltr_pdivrMl // mulr1.
-    apply: lt_trans (archi_boundP _) _; first by rewrite ger0E ltW.
-    rewrite ltr_nat; raise_big_enough.
-  by close.
-exists_big_modulus m rat.
-  move=> eps i j lt_eps_0 hmi hmj.
-  wlog ltij : i j hmi hmj / (j < i)%N.
-    move=> hwlog; case: (ltngtP i j); last by move ->; rewrite subrr.
-    - rewrite distrC; exact/hwlog.
-    - exact/hwlog.
-  rewrite gtr0_norm; last exact: lt_0_Dz3seq.
+have asympt_n_inv: {asympt e : i / n_inv_seq i < e}.
+  move=> eps eps_gt0; near=> i.
+  rewrite -[n_inv_seq _]div1r ltr_pdivrMr; last by rewrite ltr0n; near: i.
+  rewrite -ltr_pdivrMl// mulr1.
+  apply: lt_trans (archi_boundP _) _; first by rewrite ger0E ltW.
+  by rewrite ltr_nat; near: i.
+move=> eps eps_gt0; rewrite near2_curry; near=> i j => /=.
+have [ltij|ltji|<-] := ltngtP i j; last by rewrite subrr.
+  have leij := ltnW ltij.
+  rewrite -opprB normrN gtr0_norm; last exact: lt_0_Dz3seq.
   pose v (n : nat) := n%:Q ^- 2.
   have vpos (n : nat) : (0 < n)%N -> 0 < v n.
     by move=> ?; rewrite /v invr_gt0; apply: exprn_gt0; rewrite ltr0n.
-  have maj : z3seq i - z3seq j <=
-             - 2%:Q^-1 * \sum_(j <= k < i) (v (k + 1)%N - v k).
-    rewrite Dz3seqE // big_add1 /= mulr_sumr.
+  have mai : z3seq j - z3seq i <=
+             - 2%:Q^-1 * \sum_(i <= k < j) (v (k + 1)%N - v k).
+    rewrite Dz3seqE; last by [].
+    rewrite big_add1 /= mulr_sumr.
     apply: ler_sum_nat => k /andP[hjk hki]; rewrite /v addn1.
     apply: z3seq_smd_maj; rewrite ltr0n; apply: leq_trans _ hjk.
-    raise_big_enough.
-  apply: le_lt_trans maj _; rewrite telescope_nat //.
-  suff maj : v j < 2%:Q * eps.
+    by near: i.
+  apply: le_lt_trans mai _; rewrite telescope_nat; last by [].
+  suff mai : v i < 2%:Q * eps.
     rewrite mulNr -mulrN opprB ltr_pdivrMl // ltrBlDr.
-    apply: lt_trans maj _; rewrite ltrDl; apply: vpos; exact: ltn_trans ltij.
-  have maj : v j < j%:Q^-1.
-    rewrite /v -div1r ltr_pdivrMr; last by rewrite exprn_gt0 // ltr0n.
-    by rewrite mulKf ?ltr1n // lt0r_neq0 // ltr0n.
-  by apply: lt_trans maj _; apply: modulus_n_inv_P; rewrite // pmulr_rgt0.
-by close.
-Qed.
-
+    apply: lt_trans mai _; rewrite ltrDl.
+    by apply/vpos; apply: leq_ltn_trans ltij.
+  have mai : v i < i%:Q^-1.
+    rewrite /v -div1r ltr_pdivrMr; last by rewrite exprn_gt0 // ltr0n; near: i.
+    rewrite mulKf ?ltr1n; first by near: i.
+    by rewrite lt0r_neq0 // ltr0n; near: i.
+  by apply: lt_trans mai _; near: i; apply: asympt_n_inv; rewrite pmulr_rgt0.
+have leji := ltnW ltji.
+rewrite gtr0_norm; last exact: lt_0_Dz3seq.
+pose v (n : nat) := n%:Q ^- 2.
+have vpos (n : nat) : (0 < n)%N -> 0 < v n.
+  by move=> ?; rewrite /v invr_gt0; apply: exprn_gt0; rewrite ltr0n.
+have maj : z3seq i - z3seq j <=
+           - 2%:Q^-1 * \sum_(j <= k < i) (v (k + 1)%N - v k).
+  rewrite Dz3seqE; last by [].
+  rewrite big_add1 /= mulr_sumr.
+  apply: ler_sum_nat => k /andP[hjk hki]; rewrite /v addn1.
+  apply: z3seq_smd_maj; rewrite ltr0n; apply: leq_trans _ hjk.
+  by near: j.
+apply: le_lt_trans maj _; rewrite telescope_nat; last by [].
+suff maj : v j < 2%:Q * eps.
+  rewrite mulNr -mulrN opprB ltr_pdivrMl // ltrBlDr.
+  apply: lt_trans maj _; rewrite ltrDl.
+  by apply/vpos; apply: leq_ltn_trans ltji.
+have maj : v j < j%:Q^-1.
+  rewrite /v -div1r ltr_pdivrMr; last by rewrite exprn_gt0 // ltr0n; near: j.
+  rewrite mulKf ?ltr1n; first by near: j.
+  by rewrite lt0r_neq0 // ltr0n; near: j.
+by apply: lt_trans maj _; near: j; apply: asympt_n_inv; rewrite pmulr_rgt0.
+Unshelve. all: by end_near. Qed.
 
 (* Actual definition of \zeta(3) as a Cauchy real, i.e. the equivalence class *)
 (* of the sequence z3seq for Cauchy equivalence. *)
